@@ -1,0 +1,100 @@
+com.senomas.react.demo.model.Role#code:
+   -
+      code: root
+      name: Root
+   -
+      code: admin
+      name: Administrator
+      "authorities#code":
+         - log-event-list
+         - log-event-detail
+         - user-list
+         - user-detail
+         - user-save
+         - user-create
+         - role-list
+         - role-detail
+         - role-save
+         - role-create
+         - role-delete
+         - product-list
+         - product-detail
+         - product-save
+         - product-create
+   -
+      code: opr
+      name: Operator
+      "authorities#code":
+         - log-event-list
+         - log-event-detail
+         - user-list
+         - user-detail
+         - product-list
+         - product-detail
+   -
+      code: user
+      name: User
+      "authorities#code":
+         - log-event-list
+         - log-event-detail
+         - user-list
+         - user-detail
+         - role-list
+         - role-detail
+         - product-list
+         - product-detail
+         - product-save
+         - product-create
+
+com.senomas.react.demo.model.User#username:
+   -
+      "@type": com.senomas.react.demo.model.User
+      username: dev
+      plainPassword: dodol123
+      name: Dev User Test
+      status: active
+      "roles#code":
+         - root
+         - admin
+   -
+      "@type": com.senomas.react.demo.model.User
+      username: adi
+      plainPassword: dodol123
+      name: Adi
+      status: active
+      "roles#code":
+         - root
+         - admin
+   -
+      "@type": com.senomas.react.demo.model.User
+      username: budi
+      plainPassword: dodol123
+      name: Budi
+      status: active
+      "roles#code":
+         - opr
+         - user
+   -
+      "@type": com.senomas.react.demo.model.User
+      username: cici
+      plainPassword: dodol123
+      name: Cici
+      status: active
+      "roles#code":
+         - opr
+   -
+      "@type": com.senomas.react.demo.model.User
+      username: dodi
+      plainPassword: dodol123
+      name: Dodi
+      status: inactive
+      "roles#code":
+         - admin
+   -
+      "@type": com.senomas.react.demo.model.User
+      username: edi
+      plainPassword: dodol123
+      name: Edi
+      status: active
+      "roles#code":
+         - admin

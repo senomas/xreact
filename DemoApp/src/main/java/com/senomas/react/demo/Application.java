@@ -1,6 +1,10 @@
 package com.senomas.react.demo;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -49,18 +53,38 @@ public class Application {
 		} catch (IOException e) {
 			log.warn("Error reading changelog {}", e.getMessage(), e);
 		}
-		String px[] = System.getProperty("spring.profiles.active").split(",");
-		if (px.length > 0) {
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0, il = px.length; i < il; i++) {
-				if (i > 0)
-					sb.append(',');
-				sb.append(px[i]);
-				if ("dev".equals(px[i])) {
-					sb.append(",dev-").append(System.getProperty("user.name"));
+		String profiles = System.getProperty("spring.profiles.active");
+		if (profiles != null) {
+			String px[] = profiles.split(",");
+			if (px.length > 0) {
+				StringBuilder sb = new StringBuilder();
+				File gitcfg = new File(new File(System.getProperty("user.home")), ".gitconfig");
+				String user = null;
+				if (gitcfg.exists()) {
+					try (InputStream in = new FileInputStream(gitcfg)) {
+						Properties prop = new Properties();
+						prop.load(in);
+						user = prop.getProperty("name");
+					} catch (Exception e) {
+						throw new RuntimeException(e.getMessage(), e);
+					}
 				}
+				if (user == null) {
+					user = System.getProperty("user.name");
+				}
+				for (int i = 0, il = px.length; i < il; i++) {
+					if (i > 0)
+						sb.append(',');
+					sb.append(px[i]);
+					if ("dev".equals(px[i])) {
+						sb.append(",dev-").append(user);
+					}
+					if ("test".equals(px[i])) {
+						sb.append(",test-").append(user);
+					}
+				}
+				System.setProperty("spring.profiles.active", sb.toString());
 			}
-			System.setProperty("spring.profiles.active", sb.toString());
 		}
 		SpringApplication.run(Application.class, args);
 	}

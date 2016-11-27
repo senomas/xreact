@@ -54,3 +54,10 @@ logging:
       com.senomas.boot.security: DEBUG
       id.co.hanoman: DEBUG
 
+---
+spring:
+   profiles: dev-Denmaseno
+   datasource:
+      url: jdbc:mysql://localhost:3309/demo?autoReconnect=true&useSSL=false
+      username: demo
+      password: dodol123
