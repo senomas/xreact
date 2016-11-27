@@ -1,0 +1,56 @@
+spring:
+   jackson:
+      time-zone: GMT+7
+      serialization.write-dates-as-timestamps: false
+
+   jpa:
+      hibernate:
+         ddl-auto: update
+      properties:
+         hibernate:
+            dialect: org.hibernate.dialect.MySQLDialect
+
+   datasource:
+      url: jdbc:${DB_JDBC:mysql}://${DB_SERVER:localhost:3309}/${DB_NAME:demo}?autoReconnect=true&useSSL=false
+      username: ${DB_USER:demo}
+      password: ${DB_PASSWORD:dodol123}
+      timeBetweenEvictionRunsMillis: 30000
+      minEvictableIdleTimeMillis: 60000
+      testOnBorrow: true
+      validationInterval: 30000
+      validationQuery: "select 1"
+
+rest:
+   version: 1.0
+   uri: /api/v${rest.version}
+   auth.uri: /auth/v${rest.version}
+
+com.senomas:
+   http-logger:
+      order: 0
+      path:
+         "/": BASIC
+         "/v2/api-docs": OFF
+         "/swagger-": OFF
+         "/configuration/": OFF
+         "/api/": ALL
+
+logging:
+   level:
+      '*': INFO
+
+---
+spring:
+   profiles: dev
+
+logging:
+   level:
+      '*': DEBUG
+      org.springframework.security: INFO
+      org.springframework.orm.jpa: DEBUG
+      org.hibernate.SQL: DEBUG
+      org.hibernate: INFO
+      com.senomas: DEBUG
+      com.senomas.boot.security: DEBUG
+      id.co.hanoman: DEBUG
+
